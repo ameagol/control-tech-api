@@ -1,0 +1,135 @@
+{
+  "info": {
+    "name": "DeviceController API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for CRUD operations on Device entity"
+  },
+  "item": [
+    {
+      "name": "Get All Devices",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/apiv1/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["apiv1", "books"]
+        }
+      }
+    },
+    {
+      "name": "Get Device by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/apiv1/books/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["apiv1", "books", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Devices by Title",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/apiv1/books/title/:bookTitle",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["apiv1", "books", "title", ":bookTitle"],
+          "variable": [
+            {
+              "key": "bookTitle",
+              "value": "exampleTitle"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Device",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"New Device\",\n  \"author\": \"Author Name\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/apiv1/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["apiv1", "books"]
+        }
+      }
+    },
+    {
+      "name": "Update Device",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"title\": \"Updated Device\",\n  \"author\": \"Updated Author\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/apiv1/books/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["apiv1", "books", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Device",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/apiv1/books/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["apiv1", "books", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
