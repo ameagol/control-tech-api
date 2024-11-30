@@ -2,6 +2,44 @@
 INSERT INTO roles (name) VALUES ('ROLE_USER');
 INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 
+CREATE TABLE devices (
+    id BIGSERIAL PRIMARY KEY, -- Auto-incrementing ID
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Automatically sets the creation timestamp
+    name VARCHAR(255) NOT NULL,
+    serial VARCHAR(255) NOT NULL UNIQUE, -- Unique constraint on the serial
+    type VARCHAR(255) NOT NULL,
+    fru VARCHAR(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    owner VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    branch VARCHAR(255) NOT NULL,
+    invoice VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL
+);
+
+
+CREATE TABLE roles (
+    id BIGSERIAL PRIMARY KEY, -- Auto-incrementing ID
+    name VARCHAR(255) NOT NULL -- Role name
+);
+
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY, -- Auto-incrementing ID
+    name VARCHAR(255),
+    username VARCHAR(255) NOT NULL UNIQUE, -- Unique username
+    email VARCHAR(255) NOT NULL UNIQUE, -- Unique email
+    password VARCHAR(255) NOT NULL -- Password for authentication
+);
+
+CREATE TABLE users_roles (
+    user_id BIGINT NOT NULL, -- Foreign key referencing users
+    role_id BIGINT NOT NULL, -- Foreign key referencing roles
+    PRIMARY KEY (user_id, role_id), -- Composite primary key
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE, -- Cascade delete for related user roles
+    FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE -- Cascade delete for related role assignments
+);
+
+
 -- Inserting the users
 INSERT INTO users (name, username, email, password)
 VALUES ('Usuario', 'user', 'user@yahoo.com', '$2a$12$xeTO09ACTJ/C5yXp1/w.iOuvxR0h2usohe/p3yxfcySEINQ2hm9o6');
