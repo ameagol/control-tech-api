@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * ! Books resources with some simple validation
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "https://control-tech-ui.vercel.app"})
 @RequestMapping("/api/devices")
 public class DeviceController {
 
