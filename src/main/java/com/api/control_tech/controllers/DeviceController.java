@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * ! Simple Book Controller with basic CRUD Operations exposing
- * ! Books resources with some simple validation
- */
+
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200", "https://control-tech-ui.vercel.app"})
 @RequestMapping("/api/devices")
