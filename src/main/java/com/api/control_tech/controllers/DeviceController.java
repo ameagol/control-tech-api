@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-//@CrossOrigin(origins = {"http://localhost:4200", "https://control-tech-ui.vercel.app"})
+@CrossOrigin(origins = {"http://localhost:4200", "https://control-tech-ui.vercel.app"})
 @RequestMapping("/api/devices")
 public class DeviceController {
 
