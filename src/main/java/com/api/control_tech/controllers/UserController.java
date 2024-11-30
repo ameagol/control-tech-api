@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200", "https://control-tech-ui.vercel.app"})
+//@CrossOrigin(origins = {"http://localhost:4200", "https://control-tech-ui.vercel.app"})
 @RequestMapping("/api/")
 public class UserController {
 
