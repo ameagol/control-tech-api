@@ -40,6 +40,10 @@ CREATE TABLE users_roles (
 );
 
 
+-- Inserting the roles
+INSERT INTO roles (name) VALUES ('ROLE_USER');
+INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
+
 -- Inserting the users
 INSERT INTO users (name, username, email, password)
 VALUES ('Usuario', 'user', 'user@yahoo.com', '$2a$12$xeTO09ACTJ/C5yXp1/w.iOuvxR0h2usohe/p3yxfcySEINQ2hm9o6');
