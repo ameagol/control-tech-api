@@ -49,7 +49,7 @@ INSERT INTO users (name, username, email, password)
 VALUES ('Usuario', 'user', 'user@yahoo.com', '$2a$12$xeTO09ACTJ/C5yXp1/w.iOuvxR0h2usohe/p3yxfcySEINQ2hm9o6');
 
 INSERT INTO users (name, username, email, password)
-VALUES ('Ricardo', 'ricaprado', 'ricardo@yahoo.com', '$2a$12$p36N/AbAO3HLskGYZr.PMu1U47uF7o.vxb/QEMopxE.c4wG6QhSj6');
+VALUES ('Admin', 'admin', 'admin@yahoo.com', '$2a$12$p36N/AbAO3HLskGYZr.PMu1U47uF7o.vxb/QEMopxE.c4wG6QhSj6');
 
 -- Inserting data into the users_roles table
 INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);  -- User "Usuario" -> ROLE_USER
