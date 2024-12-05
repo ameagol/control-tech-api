@@ -35,6 +35,11 @@ public class DeviceController {
         return deviceRepository.findById(id).orElseThrow(DeviceNotFoundException::new);
     }
 
+    @GetMapping("/serial/{serial}")
+    public Device findById(@PathVariable String serial) {
+        return deviceRepository.findBySerial(serial).orElseThrow(DeviceNotFoundException::new);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Device create(@RequestBody Device device) {
