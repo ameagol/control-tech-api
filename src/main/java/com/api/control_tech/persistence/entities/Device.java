@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "devices")
 public class Device {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
 
     @CreationTimestamp
