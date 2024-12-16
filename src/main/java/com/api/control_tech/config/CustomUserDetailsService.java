@@ -1,6 +1,6 @@
 package com.api.control_tech.config;
 
-import com.api.control_tech.persistence.entities.User;
+import org.springframework.security.core.userdetails.User;
 import com.api.control_tech.persistence.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,19 +20,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        User user = userRepository.findByUsername(username) .orElseThrow(() ->
-                new UsernameNotFoundException("User not exists by Username or Email"));
-
-        Set<GrantedAuthority> authorities = user.getRoles().stream()
-                .map((role) -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toSet());
-
-        return new org.springframework.security.core.userdetails.User(
-                username,
-                user.getPassword(),
-                authorities
-        );
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        return userRepository.findByUserName(userName)
+                .map(user -> {
+                    Set<GrantedAuthority> authorities = user.getRoles().stream()
+                            .map(role -> new SimpleGrantedAuthority(role.getName()))
+                            .collect(Collectors.toSet());
+                    return new User(userName, user.getPassword(), authorities);
+                })
+                .orElseThrow(() -> new UsernameNotFoundException("User not exists by Username or Email"));
     }
 }

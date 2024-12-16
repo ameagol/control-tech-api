@@ -1,97 +1,224 @@
--- Inserting the roles
-INSERT INTO roles (name) VALUES ('ROLE_USER');
-INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
+--CREATE TABLE devices (
+--    id BIGSERIAL PRIMARY KEY,
+--    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--    patrim VARCHAR(255) NOT NULL,
+--    type VARCHAR(255) NOT NULL,
+--    brand VARCHAR(255) NOT NULL,
+--    model VARCHAR(255) NOT NULL,
+--    serial VARCHAR(255) NOT NULL UNIQUE, -- Unique constraint on the serial
+--    channels VARCHAR(255),
+--    storage VARCHAR(255),
+--    memory_slots INT,
+--    memory_size INT, -- Optional field for memory size in GB
+--    memory_type VARCHAR(255), -- Optional field for type of memory
+--    processor VARCHAR(255), -- Optional field for processor details
+--    processor_generation INT, -- Optional field for processor generation
+--    screen_size VARCHAR(255), -- Optional field for screen size
+--    client VARCHAR(255) NOT NULL, -- Client associated with the device
+--    function VARCHAR(255), -- Optional field for function
+--    technology VARCHAR(255), -- Optional field for technology
+--    purchase_date DATE, -- Optional field for purchase date
+--    purchase_value NUMERIC(10, 2), -- Optional field for purchase value
+--    description TEXT -- Optional field for additional notes or description
+--);
 
-CREATE TABLE devices (
-    id BIGSERIAL PRIMARY KEY, -- Auto-incrementing ID
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Automatically sets the creation timestamp
-    name VARCHAR(255) NOT NULL,
-    serial VARCHAR(255) NOT NULL UNIQUE, -- Unique constraint on the serial
-    type VARCHAR(255) NOT NULL,
-    fru VARCHAR(255) NOT NULL,
-    status VARCHAR(255) NOT NULL,
-    owner VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    branch VARCHAR(255) NOT NULL,
-    invoice VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL
-);
-
-
-CREATE TABLE roles (
-    id BIGSERIAL PRIMARY KEY, -- Auto-incrementing ID
-    name VARCHAR(255) NOT NULL -- Role name
-);
-
-CREATE TABLE users (
-    id BIGSERIAL PRIMARY KEY, -- Auto-incrementing ID
-    name VARCHAR(255),
-    username VARCHAR(255) NOT NULL UNIQUE, -- Unique username
-    email VARCHAR(255) NOT NULL UNIQUE, -- Unique email
-    password VARCHAR(255) NOT NULL -- Password for authentication
-);
-
-CREATE TABLE users_roles (
-    user_id BIGINT NOT NULL, -- Foreign key referencing users
-    role_id BIGINT NOT NULL, -- Foreign key referencing roles
-    PRIMARY KEY (user_id, role_id), -- Composite primary key
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE, -- Cascade delete for related user roles
-    FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE -- Cascade delete for related role assignments
-);
-
+--CREATE TABLE roles (
+--    id BIGSERIAL PRIMARY KEY, -- Auto-incrementing ID
+--    name VARCHAR(255) NOT NULL -- Role name
+--);
+--
+--CREATE TABLE users (
+--    id BIGSERIAL PRIMARY KEY, -- Auto-incrementing ID
+--    name VARCHAR(255),
+--    username VARCHAR(255) NOT NULL UNIQUE, -- Unique username
+--    email VARCHAR(255) NOT NULL UNIQUE, -- Unique email
+--    password VARCHAR(255) NOT NULL -- Password for authentication
+--);
+--
+--CREATE TABLE users_roles (
+--    user_id BIGINT NOT NULL, -- Foreign key referencing users
+--    role_id BIGINT NOT NULL, -- Foreign key referencing roles
+--    PRIMARY KEY (user_id, role_id), -- Composite primary key
+--    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE, -- Cascade delete for related user roles
+--    FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE -- Cascade delete for related role assignments
+--);
+--
+--
+--ALTER TABLE devices ALTER COLUMN created_at SET DEFAULT CURRENT_TIMESTAMP;
 
 -- Inserting the roles
 INSERT INTO roles (name) VALUES ('ROLE_USER');
 INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 
 -- Inserting the users
-INSERT INTO users (name, username, email, password)
-VALUES ('Usuario', 'user', 'user@yahoo.com', '$2a$12$xeTO09ACTJ/C5yXp1/w.iOuvxR0h2usohe/p3yxfcySEINQ2hm9o6');
+INSERT INTO users ( user_name, email, password)
+VALUES ('Usuario', 'user@yahoo.com', '$2a$12$xeTO09ACTJ/C5yXp1/w.iOuvxR0h2usohe/p3yxfcySEINQ2hm9o6');
 
-INSERT INTO users (name, username, email, password)
-VALUES ('Ricardo', 'ricaprado', 'ricardo@yahoo.com', '$2a$12$p36N/AbAO3HLskGYZr.PMu1U47uF7o.vxb/QEMopxE.c4wG6QhSj6');
+INSERT INTO users (user_name, email, password)
+VALUES ('Admin', 'admin@yahoo.com', '$2a$12$p36N/AbAO3HLskGYZr.PMu1U47uF7o.vxb/QEMopxE.c4wG6QhSj6');
 
 -- Inserting data into the users_roles table
 INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);  -- User "Usuario" -> ROLE_USER
 INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);  -- User "Ricardo" -> ROLE_ADMIN
 
 
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (1, CURRENT_TIMESTAMP, 'MacBook Pro', '12345A', 'Computador', 'FRU123', 'ok', 'John Doe', 'john.doe@example.com', 'Apple', 'INV-001', 'High-performance laptop from Apple.');
+--INSERT INTO devices (
+--    patrim,
+--    type,
+--    brand,
+--    model,
+--    serial,
+--    storage,
+--    memory_slots,
+--    memory_size,
+--    memory_type,
+--    cpu_quantity,
+--    cpu_model,
+--    cpu_generation,
+--    description,
+--    client
+--)
+--VALUES
+--('SEM', 'DESKTOP', 'HP', 'WORKSTATION Z800', 'BRG045FWQ0', '1 SSD 240GB + 1 HD 1TB', 12, '16GB', 'DDR3', 2, 'XEON', NULL, NULL, 'AMOR SAUDE CAMPINAS SUDOESTE (CMOC)'),
+--('302', 'DESKTOP', 'HP', 'WORKSTATION Z800', 'BRG045FWPX', 'SSD 1TB', 12, '32GB', 'DDR3', 2, 'XEON', NULL, 'W10 PRO: 6FY4T-6H8TX-TXXG3-XYPXP-XK2GH', 'AMOR SAUDE SUMARE LTDA'),
+--('SEM', 'MINI DESKTOP', 'APPLE', 'MAC MINI A1347', 'C07PW59NG1HW', 'SSD 120GB', NULL, '8GB', 'DDR3', 1, 'I5', 4, 'ESTOQUE - SENHA 1234', 'ARION SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO LTDA'),
+--('347', 'DESKTOP', 'DELL', 'OPTIPLEX 7010', 'DZF16W1', '0', 4, '2X4GB', 'DDR3', 1, 'I7', 3, 'ESTOQUE', 'ARION SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO LTDA'),
+--('SEM', 'DESKTOP', 'DELL', 'OPTIPLEX 7010', 'BB0CG22', 'SSD 1TB', 4, '16GB', NULL, 1, 'I7', 3, 'USO - RENATO', 'ARION SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO LTDA'),
+--('-', 'SLIM DESKTOP', 'DELL', 'OPTIPLEX 990', '2PLM8R1', 'SSD 240GB', 4, '2X4GB', 'DDR3', 1, 'I5', 2, '-', 'BAIXA PATRIMONIO - VENDA PAULO MORETZSOHN'),
+--('-', 'SERVIDOR', 'DELL', 'POWER EDGE T310', '4RMS2V1', '2 HD 1TB', 6, '2X2GB', 'DDR3', 1, 'XEON', NULL, '-', 'BAIXA PATRIMONIO - VENDA CDT VÁRZEA PAULISTA'),
+--('-', 'SLIM DESKTOP', 'DELL', 'VOSTRO 200', 'HSH1NH1', '0', 4, '4X2GB', 'DDR2', 1, 'CORE 2 DUO', NULL, '-', 'BAIXA PATRIMONIO - TROCA FERNANDA ANTUNES'),
+--('476', 'MINI DESKTOP', 'DELL', 'VOSTRO 3268', 'CC2JDQ2', 'SSD 120GB', 2, '1X8GB', 'DDR4', 1, 'I5', 7, 'ESTOQUE - SUBSTITUIDO POR PATRIM. 576 - AMANDA', 'ARION SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO LTDA'),
+--('471', 'SLIM DESKTOP', 'HP', 'COMPAQ 6200 PRO', 'BRG213F9HC', 'SSD 240GB', 4, '0', 'DDR3', 1, 'I5', NULL, 'ATIVADO COM LICENÇA DIGITAL', 'JMA TRANSPORTES LTDA'),
+--('130', 'SLIM DESKTOP', 'HP', 'COMPAQ ELITE 8200', 'BRG24446J1', 'SSD 240GB', 4, '0', 'DDR3', 1, 'I5', NULL, '-', 'AMOR SAUDE CAMPINAS CENTRO'),
+--('576', 'SLIM DESKTOP', 'DELL', 'OPTIPLEX 3050', 'CXMSDK2', 'SSD 240GB', 2, '1X8GB', 'DDR4', 1, 'I5', 7, 'CONTABILIDADE - AMANDA', 'ARION SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO LTDA'),
+--('296', 'DESKTOP', 'DELL', 'OPTIPLEX 7010', '3BN0CG22', 'SSD 240GB', 4, '4X4GB', 'DDR3', 1, 'I7', 3, 'TI', 'ARION SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO LTDA'),
+--('573', 'MINI DESKTOP', 'DELL', 'OPTIPLEX 3040', '5GQH1F2', 'SSD 240GB', 2, '1X8GB', 'DDR3', 1, 'I5', 7, 'ESTOQUE', 'ARION SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO LTDA'),
+--('574', 'MINI DESKTOP', 'DELL', 'OPTIPLEX 3040', '9DSHD62', 'SSD 240GB', 2, '1X8GB', 'DDR3', 1, 'I5', 7, 'ESTOQUE', 'ARION SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO LTDA'),
+--('575', 'MINI DESKTOP', 'DELL', 'OPTIPLEX 3040', 'GXMTXJ2', 'SSD 240GB', 2, '1X8GB', 'DDR3', 1, 'I5', 7, 'ESTOQUE', 'ARION SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO LTDA');
 
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (2, CURRENT_TIMESTAMP, 'Epson EcoTank L3250', '67890B', 'Impressora', 'FRU456', 'conserto', 'Jane Smith', 'jane.smith@example.com', 'Epson', 'INV-002', 'Multi-function color printer.');
 
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (3, CURRENT_TIMESTAMP, 'iPhone 14 Pro', '11223C', 'Celular', 'FRU789', 'analise', 'Alice Johnson', 'alice.johnson@example.com', 'Apple', 'INV-003', 'Latest flagship smartphone from Apple.');
+--INSERT INTO devices (
+--    patrim,
+--    type,
+--    brand,
+--    model,
+--    serial,
+--    storage,
+--    memory_slots,
+--    memory_size,
+--    memory_type,
+--    cpu_quantity,
+--    cpu_model,
+--    cpu_generation,
+--    description,
+--    client
+--)
+--VALUES
+--('SEM', 'SWITCH', 'DLINK', 'DES-1024D', 'S0121F1001411', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'SWITCH', 'DLINK', 'DES-1024D', 'F30F399000392', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'SWITCH', 'INTELBRAS', 'SG 2400 QR+', 'CGQK3800757H8', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'SWITCH', 'TP LINK', 'T1600G-52TS', '2189370000281', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'SWITCH', 'TP LINK', 'TL-SG1024D', '2187383001263', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'SWITCH', 'TP LINK', 'LS100SG', '2226OK8001426', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'SWITCH', 'INTELBRAS', 'SF800Q+ ULTRA', 'XTGH4105095A4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'SWITCH', 'INTELBRAS', 'SG800Q+', 'HCDJ49065650D', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'SWITCH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Escritório'),
+--('-', 'ROTEADOR SEM FIO', 'DLINK', 'DIR-878', 'QXEU1HB000968', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'BAIXA PATRIMONIO - VENDA CLÍNICA MORETTI'),
+--('SEM', 'ROTEADOR SEM FIO', 'INTELBRAS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'ROTEADOR SEM FIO', 'TP LINK', 'TL-WR740N', '2155095016107', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Escritório'),
+--('SEM', 'ROTEADOR LOAD BALANCE', 'TP LINK', 'TL-R470T+', '215A176000385', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'ROTEADOR LOAD BALANCE', 'TP LINK', 'TL-R470T+', '2148844000230', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'ROTEADOR LOAD BALANCE', 'TP LINK', 'TL-R480T+', '217B134000512', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'ACCESS POINT', 'UBIQUIT', 'UNIFI AC PRO', '1825KFCECDAF09932', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'HM - Paulínia'),
+--('SEM', 'ACCESS POINT', 'UBIQUIT', 'UNIFI AC PRO', '1850K18E829667DAF', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'HM - Paulínia'),
+--('SEM', 'RECEIVER', 'ORION', 'RC7000BT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', 'HM - SP Freguesia do Ó'),
+--('SEM', 'RECEIVER', 'ORION', 'RC7000BT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', 'HM - Barão de Itapura'),
+--('SEM', 'RECEIVER', 'ORION', 'RC7000BT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', 'HM - Salto'),
+--('SEM', 'RECEIVER', 'ORION', 'RC7000BT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', 'MRK MARCENARIA'),
+--('SEM', 'MEDIA CONVERTER', 'TP LINK', 'MC220L', '2197504009934', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1216', 'FJPK1600099KN', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'Arion - Estoque'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1216', 'FJPK16003149B', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'HM - Barão de Itapura'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1116', 'N8BH5001315D9', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'Arion - Estoque'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1216', 'FJPK1600098QC', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'HM - SP Guaianazes'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1216', 'N8BH2900443NN', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'HM - Limeira'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1116', 'N8BH2900440PF', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'HM - Campos Elíseos'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1116', 'N8BH2900448R1', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'Arion - Estoque'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1116', 'N8BH29004425B', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'Arion - Estoque'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1116', 'N8B14300088T7', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'HM - Praia Grande'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1216', 'FJPK1600813BP', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'HM - Santa Barbara'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1116', 'N8BH500171D0', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'HM - São Carlos'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1116', 'N8BH38000519B', '3TB', NULL, NULL, NULL, NULL, NULL, '16', 'HM - Valinhos'),
+--('SEM', 'DVR', 'INTELBRAS', 'MHDX 1008', 'NM3F0504271PH', '1TB', NULL, NULL, NULL, NULL, NULL, '8', 'Arion - Estoque'),
+--('SEM', 'NOBREAK', 'INTELBRAS', 'XNB720', 'DKDH1506546KU', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'ATA', 'GRANDSTREAM', 'HT812', '20AGB29K41FC9E5A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'CENTRAL TELEFONICA', 'INTELBRAS', 'MICRO PABX MODULARE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arion - Estoque'),
+--('SEM', 'SWITCH', 'TP LINK', 'TL-SG1048', '22322T5000232', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'BAIXA PATRIMONIO - VENDA CDT VÁRZEA PAULISTA'),
+--('SEM', 'ACCESS POINT', 'INTELBRAS', 'AP 1350 AC-S', 'Q1LL4500378NU', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'BAIXA PATRIMONIO - VENDA CDT VALINHOS'),
+--('SEM', 'SWITCH', 'TP LINK', 'LS1008', '2213395014616', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'BAIXA PATRIMONIO - VENDA CLÍNICA MORETTI'),
+--('SEM', 'ACCESS POINT', 'INTELBRAS', 'AP 1350 AC-S', 'Q1LL4500379JS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'BAIXA PATRIMONIO - VENDA CDT VÁRZEA PAULISTA')
 
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (4, CURRENT_TIMESTAMP, 'Dell UltraSharp 32"', '44556D', 'Monitor', 'FRU012', 'ok', 'Bob Brown', 'bob.brown@example.com', 'Dell', 'INV-004', 'High-resolution 32-inch monitor.');
 
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (5, CURRENT_TIMESTAMP, 'Gaming PC - Predator Orion 3000', '77889E', 'Computador', 'FRU345', 'quebrado', 'Charlie Davis', 'charlie.davis@example.com', 'Acer', 'INV-005', 'Custom-built gaming desktop.');
+--INSERT INTO devices (
+--    patrim,
+--    type,
+--    function,
+--    technology,
+--    brand,
+--    model,
+--    serial,
+--    description,
+--    client
+--)
+--VALUES
+--('286', 'IMPRESSORA', 'MULTIFUNCIONAL', 'LASER', 'BROTHER', 'DCP-7065DN', 'U62712A2N499603', '-', 'BAIXA PATRIMONIO - DOAÇÃO CLINICA'),
+--('344', 'IMPRESSORA', 'MULTIFUNCIONAL', 'JATO DE TINTA', 'BROTHER', 'MFC J6935DW', 'U64368M7F137960', 'USO - SALA ADM', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA'),
+--('159', 'IMPRESSORA', 'MULTIFUNCIONAL', 'LASER', 'BROTHER', 'MFC L6702DW', 'U64206C6N169152', 'USO - SALA ADM', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA'),
+--('464', 'IMPRESSORA', 'ETIQUETADORA', 'TÉRMICA', 'ZEBRA', 'ZD220t', 'D5N223202575', '-', 'ESTOQUE'),
+--('345', 'IMPRESSORA', 'MULTIFUNCIONAL', 'JATO DE TINTA', 'CANON', 'PIXMA G610', 'KNPG00098', 'USO - ESCRITÓRIO', 'MRK MARCENARIA E MOVEIS PLANEJADOS LTDA'),
+--('-', 'IMPRESSORA', 'MULTIFUNCIONAL', 'LASER', 'BROTHER', 'DCPL-5652DN', 'U64198K0N515540', '-', 'HENRIQUE ERNESTO DE OLIVEIRA BIANCO');
+--
+--
+--INSERT INTO devices (PATRIM, type, brand, model, serial, screenSize, description, client)
+--VALUES
+--('SEM', 'MONITOR', 'HP', 'LA1905WG', 'CNC1100KLX', 19, NULL, 'AMOR SAUDE CAMPINAS SUDOESTE (CMOC)'),
+--('303', 'MONITOR', 'SAMSUNG', 'B1940W', '0274HQAC502331E', 19, NULL, 'AMOR SAUDE SUMARE LTDA'),
+--('SEM', 'MONITOR', 'AOC', 'E2270WN', 'FMY3CIA002767', 22, 'USO - BANCADA', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA'),
+--('SEM', 'MONITOR', 'AOC', 'LE22H138', 'L221AXA014084', 22, 'USO - BANCADA', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA'),
+--('SEM', 'MONITOR', 'AOC', 'LM522', 'T560KVXMKVAO9P', 15, NULL, 'BAIXA PATRIMONIO - VENDA BETA COMPUTADORES (VAGNER)'),
+--('SEM', 'MONITOR', 'APEK', 'MAXPAD', '391401078', 39, 'ESTOQUE', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA'),
+--('SEM', 'MONITOR', 'APEK', 'MAXPAD', '392401082', 39, 'SALA DIRETORIA', 'MRK MARCENARIA E MOVEIS PLANEJADOS LTDA'),
+--('SEM', 'MONITOR', 'APEK', 'MAXPAD', NULL, 39, 'COZINHA', 'MRK MARCENARIA E MOVEIS PLANEJADOS LTDA'),
+--('330', 'MONITOR', 'DELL', '2208WFPT', 'CNOF532H7444389FAPGS', 22, 'ESTOQUE', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA'),
+--('331', 'MONITOR', 'DELL', '2208WFPT', 'CNOF532H71618871BKBMA01', 22, NULL, 'MRK MARCENARIA E MOVEIS PLANEJADOS LTDA'),
+--('332', 'MONITOR', 'DELL', '2208WFPT', 'CNOF532H744438BDBE1L', 22, NULL, 'NEOFARMA CAMPINAS MANIPULACAO LTDA'),
+--('333', 'MONITOR', 'DELL', '2208WFPT', 'CNOF532H744458CIC44L', 22, 'ESTOQUE', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA'),
+--('460', 'MONITOR', 'DELL', '2208WFPT', 'CNOF532H71618871BKHMA01', 22, NULL, 'MRK MARCENARIA E MOVEIS PLANEJADOS LTDA'),
+--('SEM', 'MONITOR', 'DELL', 'E157FPC', 'CN-0FJ066-64180-6AH-021S', 15, NULL, 'BAIXA PATRIMONIO - VENDA BETA COMPUTADORES (VAGNER)'),
+--('59', 'MONITOR', 'HP', 'V206hz', 'BRG34209Q4', 20, 'FUNCIONA SOMENTE VGA', 'JMA TRANSPORTES LTDA'),
+--('60', 'MONITOR', 'HP', 'V206hz', 'BRG349022S', 20, 'FUNCIONA SOMENTE VGA', 'JMA TRANSPORTES LTDA'),
+--('62', 'MONITOR', 'HP', 'V206hz', 'BRG506053J', 20, NULL, 'JMA TRANSPORTES LTDA'),
+--('63', 'MONITOR', 'HP', 'V206hz', 'BRG415039H', 20, 'FUNCIONA SOMENTE VGA', 'JMA TRANSPORTES LTDA'),
+--('64', 'MONITOR', 'HP', 'V206hz', 'BRG51004K4', 20, NULL, 'JMA TRANSPORTES LTDA'),
+--('67', 'MONITOR', 'HP', 'V206hz', 'BRG44204TK', 20, NULL, 'JMA TRANSPORTES LTDA'),
+--('68', 'MONITOR', 'HP', 'V206hz', 'BRG3490217', 20, NULL, 'NEOFARMA CAMPINAS MANIPULACAO LTDA'),
+--('71', 'MONITOR', 'HP', 'V206hz', 'BRG44204DB', 20, 'ESTOQUE', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA');
+--
+--
+--INSERT INTO devices (patrim, type, brand, model, serial, storage, memory_slots, memory_size, memory_type, processor, generation, screen_size, description, client)
+--VALUES
+--(19, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'DPJSVG2', 'SSD 240GB NVME', 2, '16GB', 'DDR4', 'I5', 6, 14, NULL, 'WEST 1 FRANCHISING E PARTICIPAÇÕES LTDA'),
+--(21, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'DP5MVG2', 'SSD 240GB', 2, '16GB', 'DDR4', 'I5', 6, 14, NULL, 'WEST 1 FRANCHISING E PARTICIPAÇÕES LTDA'),
+--(24, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'DP7LVG2', 'SSD 512GB', 2, '16GB', 'DDR4', 'I5', 6, 14, 'ESTOQUE', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA'),
+--(25, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'DPLTVG2', 'SSD 240GB', 2, '2X8GB', 'DDR4', 'I5', 6, 14, NULL, 'CANAL SOLAR'),
+--(26, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'DPDNVG2', 'SSD 240GB', 2, '8GB', 'DDR4', 'I5', 6, 14, NULL, 'WEST 1 FRANCHISING E PARTICIPAÇÕES LTDA'),
+--(27, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', '50LSHJ2', 'SSD 240GB', 2, '8GB', 'DDR4', 'I5', 6, 14, NULL, 'WEST 1 FRANCHISING E PARTICIPAÇÕES LTDA'),
+--(28, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'DP1MVG2', 'SSD 240GB', 2, '16GB', 'DDR4', 'I5', 6, 14, NULL, 'M1 CONSULTORIA LTDA'),
+--(29, 'NOTEBOOK', 'DELL', 'LATITUDE E5440', 'HQMXMZ1', 'SSD 120GB', 2, '2X4GB', 'DDR3', 'I5', 4, 14, 'NOTEBOOK REVISADO 05/2024', 'BAIXA PATRIMONIO - NOTEBOOK ACORDO RODRIGO R. COIFA'),
+--(33, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'DP3SVG2', 'SSD 240GB', 2, '16GB', 'DDR4', 'I5', 6, 14, NULL, 'M1 CONSULTORIA LTDA'),
+--(34, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'DPZNVG2', 'SSD 240GB NVME', 2, '16GB', 'DDR4', 'I5', 6, 14, NULL, 'WEST 1 FRANCHISING E PARTICIPAÇÕES LTDA'),
+--(38, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'BTP5MD2', 'SSD 240GB', 2, '16GB', 'DDR4', 'I5', 6, 14, NULL, 'M1 CONSULTORIA LTDA'),
+--(39, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'DYG42H2', 'SSD 240GB', 2, '16GB', 'DDR4', 'I5', 6, 14, NULL, 'M1 CONSULTORIA LTDA'),
+--(41, 'NOTEBOOK', 'DELL', 'LATITUDE 3470', '3Y0MHJ2', 'SSD 240GB', 2, '2X4GB', 'DDR3', 'I5', 6, 14, NULL, 'IDISA'),
+--(55, 'NOTEBOOK', 'DELL', 'LATITUDE E5470', 'F5NNCK2', 'SSD 120GB', 2, '1X4GB', 'DDR4', 'I5', 6, 14, 'ESTOQUE - TROCAR TECLADO - S/ POINT STICK', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA'),
+--(76, 'NOTEBOOK', 'DELL', 'LATITUDE 3470', '3ZFPHJ2', 'SSD 240GB', 2, '8GB', 'DDR3', 'I5', 6, 14, 'ESTOQUE', 'ARION SOLUCOES EM TECNOLOGIA DA INFORMACAO LTDA');
 
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (6, CURRENT_TIMESTAMP, 'Samsung Galaxy S22', '99110F', 'Celular', 'FRU678', 'ok', 'Diana Evans', 'diana.evans@example.com', 'Samsung', 'INV-006', 'High-end Android smartphone.');
-
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (7, CURRENT_TIMESTAMP, 'HP DeskJet 2722', '22334G', 'Impressora', 'FRU901', 'analise', 'Ethan Green', 'ethan.green@example.com', 'HP', 'INV-007', 'Compact home printer.');
-
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (8, CURRENT_TIMESTAMP, 'Dell Inspiron Desktop', '33445H', 'Computador', 'FRU234', 'quebrado', 'Fiona Harris', 'fiona.harris@example.com', 'Dell', 'INV-008', 'All-in-one desktop.');
-
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (9, CURRENT_TIMESTAMP, 'Dell P2422HE', '44556I', 'Monitor', 'FRU567', 'ok', 'George Ingram', 'george.ingram@example.com', 'Dell', 'INV-009', 'High-quality office monitor.');
-
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (10, CURRENT_TIMESTAMP, 'Mac Mini M2', '55667J', 'Computador', 'FRU890', 'analise', 'Hannah Jackson', 'hannah.jackson@example.com', 'Apple', 'INV-010', 'Compact desktop computer.');
-
--- Partes Entries
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (11, CURRENT_TIMESTAMP, 'Logitech MX Master 3', '66789K', 'Partes', 'FRU1234', 'ok', 'Ian Thomas', 'ian.thomas@example.com', 'Logitech', 'INV-011', 'Wireless ergonomic mouse.');
-
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (12, CURRENT_TIMESTAMP, 'Razer BlackWidow V3', '77890L', 'Partes', 'FRU5678', 'analise', 'Olivia Parker', 'olivia.parker@example.com', 'Razer', 'INV-012', 'Mechanical gaming keyboard.');
-
-INSERT INTO devices (id, created_at, name, serial, type, fru, status, owner, email, branch, invoice, description)
-VALUES (13, CURRENT_TIMESTAMP, 'Polycom VVX 250', '88901M', 'Partes', 'FRU9012', 'quebrado', 'Mason Taylor', 'mason.taylor@example.com', 'Polycom', 'INV-013', 'Office desk phone.');
