@@ -51,15 +51,15 @@ INSERT INTO roles (name) VALUES ('ROLE_USER');
 INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 
 -- Inserting the users
-INSERT INTO users ( user_name, email, password)
-VALUES ('Usuario', 'user@yahoo.com', '$2a$12$xeTO09ACTJ/C5yXp1/w.iOuvxR0h2usohe/p3yxfcySEINQ2hm9o6');
+-- INSERT INTO users ( user_name, email, password)
+-- VALUES ('Usuario', 'user@yahoo.com', '$2a$12$xeTO09ACTJ/C5yXp1/w.iOuvxR0h2usohe/p3yxfcySEINQ2hm9o6');
 
-INSERT INTO users (user_name, email, password)
-VALUES ('Admin', 'admin@yahoo.com', '$2a$12$p36N/AbAO3HLskGYZr.PMu1U47uF7o.vxb/QEMopxE.c4wG6QhSj6');
+-- INSERT INTO users (user_name, email, password)
+-- VALUES ('Admin', 'admin@yahoo.com', '$2a$12$p36N/AbAO3HLskGYZr.PMu1U47uF7o.vxb/QEMopxE.c4wG6QhSj6');
 
--- Inserting data into the users_roles table
-INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);  -- User "Usuario" -> ROLE_USER
-INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);  -- User "Ricardo" -> ROLE_ADMIN
+-- -- Inserting data into the users_roles table
+-- INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);  -- User "Usuario" -> ROLE_USER
+-- INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);  -- User "Ricardo" -> ROLE_ADMIN
 
 
 --INSERT INTO devices (
