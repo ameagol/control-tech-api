@@ -61,7 +61,7 @@ public class CompanyController {
 
     @GetMapping("/user/{username}")
     public ResponseEntity<List<CompanyDto>> getCompaniesByUserId(@PathVariable String username) {
-        return userRepository.findByUserName(username)
+        return userRepository.findByEmail(username)
                 .map(user -> {
                     List<CompanyDto> companyDtos = companyRepository.findByUserId(user.getId())
                             .stream()
