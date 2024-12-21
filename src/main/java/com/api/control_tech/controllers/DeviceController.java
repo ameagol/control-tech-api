@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import com.api.control_tech.exceptions.DeviceIdMismatchException;
 import com.api.control_tech.exceptions.DeviceNotFoundException;
 import com.api.control_tech.models.DeviceDto;
 import com.api.control_tech.persistence.entities.Company;
