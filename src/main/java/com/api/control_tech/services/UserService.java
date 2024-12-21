@@ -34,7 +34,7 @@ public class UserService {
     public SubscribeDto registerUser(SubscribeDto subscribeDto) {
         validateUser(subscribeDto);
 
-        Role userRole = roleRepository.findByName("ROLE_USER")
+        Role userRole = roleRepository.findByName("ROLE_ADMIN")
                 .orElseThrow(() -> new RoleNotFoundException("Role not found"));
 
         User savedUser = Optional.of(subscribeDto)
