@@ -39,9 +39,9 @@ public class UserService {
         User savedUser = Optional.of(subscribeDto)
                 .map(dto -> {
                     User user = new User();
-                    user.setUserName(dto.getUsername());
+                    user.setName(dto.getUserName());
                     user.setPassword(passwordEncoder.encode(dto.getPassword()));
-                    user.setEmail(dto.getUsername());
+                    user.setEmail(dto.getUserName());
                     user.setRoles(Set.of(userRole));
                     return user;
                 })
@@ -69,7 +69,7 @@ public class UserService {
 
     private void validateUser(SubscribeDto subscribeDto) {
         Optional.ofNullable(subscribeDto)
-                .filter(dto -> !userRepository.existsByUserName(dto.getUsername()))
+                .filter(dto -> !userRepository.existsByName(dto.getUserName()))
                 .orElseThrow(() -> new UserAlreadyExistsException("User already exists"));
 
         Optional.of(subscribeDto.getPassword())

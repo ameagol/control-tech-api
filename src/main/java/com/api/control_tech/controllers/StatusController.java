@@ -43,7 +43,7 @@ public class StatusController {
 
     @GetMapping("/user/{username}")
     public ResponseEntity<List<StatusDto>> getAllStatuses(@PathVariable String username) {
-        return userRepository.findByUserName(username)
+        return userRepository.findByName(username)
                 .map(user -> {
                     List<StatusDto> statusDtos = statusRepository.findByUserId(user.getId())
                             .stream()

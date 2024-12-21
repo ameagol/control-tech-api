@@ -23,6 +23,9 @@ public class Device {
     @Column(nullable = false)
     private String brand;
 
+    @Column(nullable = false)
+    private String deviceGroup;
+
     @Column
     private Integer channels;
 

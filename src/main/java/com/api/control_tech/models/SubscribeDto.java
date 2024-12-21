@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class SubscribeDto {
-    private String username;
+    private String userName;
     private String password;
     private String company;
 }

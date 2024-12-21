@@ -14,18 +14,20 @@ public class UserDto {
     private Long id;
     private String email;
     private List<RoleDto> roles;
-    private String userName;
+    private String name;
+    private String resetHash;
     private Set<GrantedAuthority> authorities;
 
     public UserDto(String userName, Set<GrantedAuthority> authorities) {
-        this.userName = userName;
+        this.name = userName;
         this.authorities = authorities;
     }
 
     public UserDto(User user) {
         this.id = user.getId();
-        this.userName = user.getUserName();
+        this.name = user.getName();
         this.email = user.getEmail();
+//        this.resetHash = user.getResetHash();
         this.roles = user.getRoles() != null
                 ? user.getRoles().stream().map(RoleDto::new).collect(Collectors.toList())
                 : null;

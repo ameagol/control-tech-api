@@ -20,13 +20,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        return userRepository.findByUserName(userName)
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        return userRepository.findByName(name)
                 .map(user -> {
                     Set<GrantedAuthority> authorities = user.getRoles().stream()
                             .map(role -> new SimpleGrantedAuthority(role.getName()))
                             .collect(Collectors.toSet());
-                    return new User(userName, user.getPassword(), authorities);
+                    return new User(name, user.getPassword(), authorities);
                 })
                 .orElseThrow(() -> new UsernameNotFoundException("User not exists by Username or Email"));
     }

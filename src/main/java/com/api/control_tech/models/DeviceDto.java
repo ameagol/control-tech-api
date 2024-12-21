@@ -17,6 +17,7 @@ public class DeviceDto {
     private String cpuModel;
     private Integer cpuQuantity;
     private String description;
+    private String deviceGroup;
     private String function;
     private String model;
     private String patrim;
@@ -56,6 +57,7 @@ public class DeviceDto {
         this.technology = device.getTechnology();
         this.type = device.getType();
         this.status = device.getStatus();
-        this.companyName = device.getCompany().getName();  // Assuming Company has a name
+        this.deviceGroup = device.getDeviceGroup();
+        this.companyName = device.getCompany().getName();
     }
 }
