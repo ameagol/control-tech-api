@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -43,6 +44,7 @@ public class UserService {
                     user.setPassword(passwordEncoder.encode(dto.getPassword()));
                     user.setEmail(dto.getEmail());
                     user.setRoles(Set.of(userRole));
+                    user.setResetHash(UUID.randomUUID().toString());
                     return user;
                 })
                 .map(userRepository::save)
