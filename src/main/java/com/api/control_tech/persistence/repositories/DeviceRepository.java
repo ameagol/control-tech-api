@@ -14,6 +14,11 @@ import org.springframework.data.repository.query.Param;
  */
 public interface DeviceRepository extends CrudRepository<Device, Long>{
     List<Device> findByType(String type);
+    @Query("SELECT d FROM Device d " +
+            "JOIN d.company c " +
+            "JOIN c.user u " +
+            "WHERE u.email = :email")
+    List<Device> findByUserEmail(@Param("email") String email);
     Optional<Device> findBySerial(String serial);
     @Query("SELECT d FROM Device d WHERE " +
             "LOWER(CAST(d.serial AS string)) LIKE LOWER(CONCAT('%', :searchValue, '%')) OR " +

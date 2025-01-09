@@ -29,9 +29,9 @@ public class DeviceController {
     @Autowired
     private CompanyRepository companyRepository;
 
-    @GetMapping
-    public ResponseEntity<List<DeviceDto>> findAllDevices() {
-        return Optional.of(deviceRepository.findAll())
+    @GetMapping("/by-user-email")
+    public ResponseEntity<List<DeviceDto>> findAllDevices(@RequestParam String email) {
+        return Optional.of(deviceRepository.findByUserEmail(email))
                 .map(devices -> StreamSupport.stream(devices.spliterator(), false)
                         .map(device -> new DeviceDto(device))
                         .collect(Collectors.toList()))
