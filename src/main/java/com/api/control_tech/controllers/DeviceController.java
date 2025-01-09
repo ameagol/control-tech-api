@@ -12,6 +12,7 @@ import com.api.control_tech.persistence.entities.Company;
 import com.api.control_tech.persistence.entities.Device;
 import com.api.control_tech.persistence.repositories.CompanyRepository;
 import com.api.control_tech.persistence.repositories.DeviceRepository;
+import com.api.control_tech.services.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,18 @@ public class DeviceController {
     @Autowired
     private CompanyRepository companyRepository;
 
+
+    @Autowired
+    private AuthService authService;
+
     @GetMapping("/by-user-email")
-    public ResponseEntity<List<DeviceDto>> findAllDevices(@RequestParam String email) {
+    public ResponseEntity<List<DeviceDto>> findAllDevices(@RequestParam String email,@RequestHeader("Authorization") String authorization) {
+        String token = authorization.replace("Bearer ", "");
+        String userEmail = authService.getUserEmailFromToken(token);
+
+        if (!userEmail.equals(email)) {
+            throw new DeviceNotFoundException("You are not authorized to access these devices");
+        }
         return Optional.of(deviceRepository.findByUserEmail(email))
                 .map(devices -> StreamSupport.stream(devices.spliterator(), false)
                         .map(device -> new DeviceDto(device))
