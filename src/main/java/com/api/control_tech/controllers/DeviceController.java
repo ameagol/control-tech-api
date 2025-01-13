@@ -100,7 +100,7 @@ public class DeviceController {
                 .filter(search -> !search.trim().isEmpty())
                 .map(search -> deviceRepository.searchDevices(search))
                 .map(devices -> devices.stream()
-                        .map(DeviceDto::new) // Convert to DTO
+                        .map(DeviceDto::new)
                         .collect(Collectors.toList()))
                 .filter(deviceDtos -> !deviceDtos.isEmpty())
                 .map(ResponseEntity::ok)
