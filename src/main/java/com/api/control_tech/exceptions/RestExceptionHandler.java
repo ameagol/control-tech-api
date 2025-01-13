@@ -20,22 +20,22 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DeviceNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleDeviceNotFound(DeviceNotFoundException ex) {
-        return buildErrorResponse("Could not locate device Provided", "Device Not Found", HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Invalid Search", "Device Not Found", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleUserNotFound(UsernameNotFoundException ex) {
-        return buildErrorResponse("Could not locate user Provided", "User Not Found", HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Invalid Searchd", "User Not Found", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(RoleNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleRoleNotFound(RoleNotFoundException ex) {
-        return buildErrorResponse("Could not locate Role Provided", "Role Not Found", HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Invalid Search", "Role Not Found", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(StatusNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleStatusNotFound(StatusNotFoundException ex) {
-        return buildErrorResponse("Could not locate Status Provided", "Role Not Found", HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Invalid Search", "Role Not Found", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
