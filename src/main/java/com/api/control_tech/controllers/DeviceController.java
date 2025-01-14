@@ -11,8 +11,8 @@ import com.api.control_tech.models.DeviceDto;
 import com.api.control_tech.persistence.entities.Company;
 import com.api.control_tech.persistence.entities.Device;
 import com.api.control_tech.persistence.repositories.CompanyRepository;
-import com.api.control_tech.persistence.repositories.DeviceRepository;
 import com.api.control_tech.services.AuthService;
+import com.api.control_tech.services.DeviceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class DeviceController {
 
     @Autowired
-    private DeviceRepository deviceRepository;
+    private DeviceService deviceService;
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -42,7 +42,7 @@ public class DeviceController {
         if (!userEmail.equals(email)) {
             throw new DeviceNotFoundException("You are not authorized to access these devices");
         }
-        return Optional.of(deviceRepository.findByUserEmail(email))
+        return Optional.of(deviceService.findByUserEmail(email))
                 .map(devices -> StreamSupport.stream(devices.spliterator(), false)
                         .map(device -> new DeviceDto(device))
                         .collect(Collectors.toList()))
@@ -53,7 +53,7 @@ public class DeviceController {
 
     @GetMapping("/type/{type}")
     public ResponseEntity<List<Device>> findByTitle(@PathVariable String type) {
-        return Optional.ofNullable(deviceRepository.findByType(type))
+        return Optional.ofNullable(deviceService.findByType(type))
                 .filter(devices -> !devices.isEmpty())
                 .map(devices -> ResponseEntity.ok(devices))
                 .orElseThrow(() -> new DeviceNotFoundException("No devices found for type: " + type));
@@ -61,14 +61,14 @@ public class DeviceController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DeviceDto> findById(@PathVariable Long id) {
-        return deviceRepository.findById(id)
+        return deviceService.findById(id)
                 .map(device -> ResponseEntity.ok(new DeviceDto(device)))
                 .orElseThrow(DeviceNotFoundException::new);
     }
 
     @GetMapping("/serial/{serial}")
     public ResponseEntity<DeviceDto> findById(@PathVariable String serial) {
-        return deviceRepository.findBySerial(serial)
+        return deviceService.findBySerial(serial)
                 .map(device -> ResponseEntity.ok(new DeviceDto(device)))
                 .orElseThrow(DeviceNotFoundException::new);
     }
@@ -81,7 +81,7 @@ public class DeviceController {
                     Company company = companyRepository.findById(d.getCompany().getId())
                             .orElseThrow(DeviceNotFoundException::new);
                     d.setCompany(company);
-                    return deviceRepository.save(d);
+                    return deviceService.saveDevice(d);
                 })
                 .map(_device -> ResponseEntity.ok(new DeviceDto(_device)))
                 .orElseThrow(() -> new RuntimeException("Failed to Save Device"));
@@ -89,8 +89,8 @@ public class DeviceController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
-        deviceRepository.findById(id)
-                .ifPresentOrElse(device -> deviceRepository.deleteById(id),
+        deviceService.findById(id)
+                .ifPresentOrElse(device -> deviceService.deleteById(id),
                         () -> { throw new DeviceNotFoundException("Devices Not Found"); });
     }
 
@@ -98,7 +98,7 @@ public class DeviceController {
     public ResponseEntity<List<DeviceDto>> searchDevices(@RequestBody Map<String, String> query) {
         return Optional.ofNullable(query.get("search"))
                 .filter(search -> !search.trim().isEmpty())
-                .map(search -> deviceRepository.searchDevices(search))
+                .map(search -> deviceService.searchDevices(search))
                 .map(devices -> devices.stream()
                         .map(DeviceDto::new)
                         .collect(Collectors.toList()))
