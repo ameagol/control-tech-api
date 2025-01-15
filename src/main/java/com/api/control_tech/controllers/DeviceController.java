@@ -30,7 +30,6 @@ public class DeviceController {
     @Autowired
     private CompanyRepository companyRepository;
 
-
     @Autowired
     private AuthService authService;
 

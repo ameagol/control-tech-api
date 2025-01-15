@@ -1,6 +1,5 @@
 package com.api.control_tech.exceptions;
 
-
 public class InvalidCompanyException extends RuntimeException{
 
     public InvalidCompanyException() {

@@ -16,7 +16,7 @@ public class CompanyDto {
 
     public CompanyDto(Company company) {
         this.id = company.getId();
-        this.name = company.getName();
+        this.name = company.getName() != null ? company.getName().toUpperCase() : null;
         this.user = company.getUser() != null ? new UserDto(company.getUser()) : null;
     }
 

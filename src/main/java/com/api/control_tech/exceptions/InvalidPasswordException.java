@@ -1,6 +1,5 @@
 package com.api.control_tech.exceptions;
 
-
 public class InvalidPasswordException extends RuntimeException{
 
     public InvalidPasswordException() {

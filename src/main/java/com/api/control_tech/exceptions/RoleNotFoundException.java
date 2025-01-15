@@ -1,6 +1,5 @@
 package com.api.control_tech.exceptions;
 
-
 public class RoleNotFoundException extends RuntimeException{
 
     public RoleNotFoundException() {

@@ -16,7 +16,7 @@ public class StatusDto {
 
     public StatusDto(Status status) {
         this.id = status.getId();
-        this.name = status.getName();
+        this.name = status.getName() != null ? status.getName().toUpperCase() : null;
         this.user = status.getUser() != null ? new UserDto(status.getUser()) : null;
     }
 

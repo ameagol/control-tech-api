@@ -42,16 +42,15 @@ public class CompanyController {
 
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<CompanyDto> updateCompany(@PathVariable Long id, @RequestBody CompanyDto companyDto) {
-        return companyRepository.findById(id)
+    public ResponseEntity<CompanyDto> updateCompany(@RequestBody CompanyDto companyDto) {
+        return companyRepository.findById(companyDto.getId())
                 .map(existingCompany -> userRepository.findByEmail(companyDto.getUser().getEmail())
                         .map(user -> {
                             existingCompany.setName(companyDto.getName());
                             existingCompany.setUser(user);
                             Company updatedCompany = companyRepository.save(existingCompany);
-                            // Convert to DTO before returning
                             return ResponseEntity.ok(new CompanyDto(updatedCompany));
                         })
                         .orElseThrow(() -> new UsernameNotFoundException("User not found")))

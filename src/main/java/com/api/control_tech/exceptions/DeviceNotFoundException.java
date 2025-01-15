@@ -1,8 +1,5 @@
 package com.api.control_tech.exceptions;
 
-/**
- * ! Handling a custom exception message-cause class for BooksNotFound
- */
 public class DeviceNotFoundException extends RuntimeException{
 
     public DeviceNotFoundException() {
