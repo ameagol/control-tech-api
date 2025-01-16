@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
+import com.api.control_tech.exceptions.DeviceIdMismatchException;
 import com.api.control_tech.exceptions.DeviceNotFoundException;
 import com.api.control_tech.models.DeviceDto;
 import com.api.control_tech.persistence.entities.Company;
@@ -33,19 +33,18 @@ public class DeviceController {
     @Autowired
     private AuthService authService;
 
-    @GetMapping("/by-user-email")
-    public ResponseEntity<List<DeviceDto>> findAllDevices(@RequestParam String email,@RequestHeader("Authorization") String authorization) {
+    @GetMapping
+    public ResponseEntity<List<DeviceDto>> findAllDevices(@RequestHeader("Authorization") String authorization) {
         String token = authorization.replace("Bearer ", "");
-        String userEmail = authService.getUserEmailFromToken(token);
 
-        if (!userEmail.equals(email)) {
-            throw new DeviceNotFoundException("You are not authorized to access these devices");
-        }
-        return Optional.of(deviceService.findByUserEmail(email))
-                .map(devices -> StreamSupport.stream(devices.spliterator(), false)
+        String userEmail = Optional.ofNullable(authService.getUserEmailFromToken(token))
+                .orElseThrow(DeviceNotFoundException::new);
+
+        return Optional.of(deviceService.findByUserEmail(userEmail))
+                .filter(devices -> !devices.isEmpty())
+                .map(devices -> devices.stream()
                         .map(device -> new DeviceDto(device))
                         .collect(Collectors.toList()))
-                .filter(deviceDtos -> !deviceDtos.isEmpty())
                 .map(ResponseEntity::ok)
                 .orElseThrow(DeviceNotFoundException::new);
     }
@@ -55,7 +54,7 @@ public class DeviceController {
         return Optional.ofNullable(deviceService.findByType(type))
                 .filter(devices -> !devices.isEmpty())
                 .map(devices -> ResponseEntity.ok(devices))
-                .orElseThrow(() -> new DeviceNotFoundException("No devices found for type: " + type));
+                .orElseThrow(DeviceNotFoundException::new);
     }
 
     @GetMapping("/{id}")
@@ -83,14 +82,14 @@ public class DeviceController {
                     return deviceService.saveDevice(d);
                 })
                 .map(_device -> ResponseEntity.ok(new DeviceDto(_device)))
-                .orElseThrow(() -> new RuntimeException("Failed to Save Device"));
+                .orElseThrow(DeviceIdMismatchException::new);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
         deviceService.findById(id)
                 .ifPresentOrElse(device -> deviceService.deleteById(id),
-                        () -> { throw new DeviceNotFoundException("Devices Not Found"); });
+                        () -> { throw new DeviceNotFoundException(); });
     }
 
     @PostMapping("/search")

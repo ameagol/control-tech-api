@@ -20,22 +20,27 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DeviceNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleDeviceNotFound(DeviceNotFoundException ex) {
-        return buildErrorResponse("Invalid Request", "Device Not Found", HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Device Not Found", "Invalid Request",  HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(UsernameNotFoundException.class)
-    protected ResponseEntity<ErrorResponse> handleUserNotFound(UsernameNotFoundException ex) {
-        return buildErrorResponse("Invalid Request", "User Not Found", HttpStatus.NOT_FOUND);
+    @ExceptionHandler(DeviceIdMismatchException.class)
+    protected ResponseEntity<ErrorResponse> handleDeviceNotFound(DeviceIdMismatchException ex) {
+        return buildErrorResponse("Bad Request", "Failed to save device",  HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    protected ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex) {
+        return buildErrorResponse("User Not Found", "Invalid Request", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(RoleNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleRoleNotFound(RoleNotFoundException ex) {
-        return buildErrorResponse("Invalid Request", "Role Not Found", HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Role Not Found", "Invalid Request",  HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(StatusNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleStatusNotFound(StatusNotFoundException ex) {
-        return buildErrorResponse("Invalid Request", "Role Not Found", HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Status Not Found", "Invalid Request", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
@@ -49,7 +54,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({
-            DeviceIdMismatchException.class,
             ConstraintViolationException.class,
             DataIntegrityViolationException.class
     })

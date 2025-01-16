@@ -97,7 +97,7 @@ INSERT INTO companies (id, name, user_id) VALUES
 	('-83', 'SYHUS CONTABILIDADE', '2'),
 	('-84', 'VNS TRANSPORTES EIRELI', '2'),
 	('-85', 'WEST 1 FRANCHISING E PARTICIPAÇÕES LTDA', '2'),
-	('-86', 'YES SAVE CREDITO LTDA (DR. CPF)', '2');
+	('-86', 'YES SAVE CREDITO LTDA (DR. CPF)', '2'),
 	('-87', 'GELLMAN', '1');
 
 	INSERT INTO devices (channels, cpu_generation, cpu_quantity, memory_slots, purchase_date, purchase_value, company_id, created_at, id,  brand, cpu_model, description, device_group, function, memory_size, memory_type, model, patrim, screen_size, serial, status, storage, technology, type) VALUES

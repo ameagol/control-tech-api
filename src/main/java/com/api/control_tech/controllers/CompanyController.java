@@ -1,14 +1,16 @@
 package com.api.control_tech.controllers;
 
+import com.api.control_tech.exceptions.DeviceNotFoundException;
 import com.api.control_tech.exceptions.InvalidCompanyException;
+import com.api.control_tech.exceptions.UserNotFoundException;
 import com.api.control_tech.models.CompanyDto;
 import com.api.control_tech.persistence.entities.Company;
 import com.api.control_tech.persistence.repositories.CompanyRepository;
 import com.api.control_tech.persistence.repositories.UserRepository;
+import com.api.control_tech.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 public class CompanyController {
 
     @Autowired
+    private AuthService authService;
+    @Autowired
     private CompanyRepository companyRepository;
 
     @Autowired
@@ -32,13 +36,13 @@ public class CompanyController {
         return Optional.of(company)
                 .flatMap(c -> userRepository.findByEmail(c.getUser().getEmail())
                         .map(user -> {
-                            if (companyRepository.existsByNameAndUser(c.getName(), user)) {
-                                throw new InvalidCompanyException("Company name already exists for this user.");
-                            }
+                            Optional.of(companyRepository.existsByNameAndUser(c.getName(), user))
+                                    .filter(exists -> !exists)
+                                    .orElseThrow(InvalidCompanyException::new);
                             return companyRepository.save(new Company(c.getName(), user));
                         }))
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new InvalidCompanyException("Failed to Create Company"));
+                .orElseThrow(InvalidCompanyException::new);
 
     }
 
@@ -53,14 +57,19 @@ public class CompanyController {
                             Company updatedCompany = companyRepository.save(existingCompany);
                             return ResponseEntity.ok(new CompanyDto(updatedCompany));
                         })
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found")))
-                .orElseThrow(() -> new InvalidCompanyException("Company not found"));
+                        .orElseThrow(UserNotFoundException::new))
+                .orElseThrow(InvalidCompanyException::new);
     }
 
 
-    @GetMapping("/user/{email}")
-    public ResponseEntity<List<CompanyDto>> getCompaniesByUserId(@PathVariable String email) {
-        return userRepository.findByEmail(email)
+    @GetMapping
+    public ResponseEntity<List<CompanyDto>> getCompaniesByUserId(@RequestHeader("Authorization") String authorization) {
+        String token = authorization.replace("Bearer ", "");
+
+        String userEmail = Optional.ofNullable(authService.getUserEmailFromToken(token))
+                .orElseThrow(DeviceNotFoundException::new);
+
+        return userRepository.findByEmail(userEmail)
                 .map(user -> {
                     List<CompanyDto> companyDtos = companyRepository.findByUserId(user.getId())
                             .stream()
@@ -68,6 +77,6 @@ public class CompanyController {
                             .collect(Collectors.toList());
                     return ResponseEntity.ok(companyDtos);
                 })
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(UserNotFoundException::new);
     }
 }

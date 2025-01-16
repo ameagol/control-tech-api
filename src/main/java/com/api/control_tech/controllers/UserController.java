@@ -18,22 +18,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin")
-    public ResponseEntity<String> helloAdmin(){
-        return ResponseEntity.ok("Hello Admin");
-    }
-
-    @PreAuthorize("hasRole('USER', 'ADMIN')")
-    @GetMapping("/user")
-    public ResponseEntity<String> helloUser(){
-        return ResponseEntity.ok("Hello User");
-    }
-
     @PostMapping("/subscribe")
     public ResponseEntity<SubscribeDto> registerUser(@RequestBody SubscribeDto subscribeDto) {
         return Optional.ofNullable(userService.registerUser(subscribeDto))
                 .map(user -> ResponseEntity.ok(user))
-                .orElseThrow(() -> new UserAlreadyExistsException("User already exists"));
+                .orElseThrow(UserAlreadyExistsException::new);
     }
 }

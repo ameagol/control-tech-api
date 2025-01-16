@@ -1,8 +1,5 @@
 package com.api.control_tech.exceptions;
 
-/**
- * ! Handling a custom exception message-cause class for BooksIdMismatch
- */
 public class DeviceIdMismatchException extends RuntimeException {
 
     public DeviceIdMismatchException() {
